@@ -26,7 +26,6 @@ dependencies = [
     "pg-autojoin",
 ]
 
-
 [tool.uv.sources]
 pg-autojoin = { git = "https://github.com/bealdav/pg-autojoin.git", rev = "main" }
 
@@ -34,4 +33,3 @@ pg-autojoin = { git = "https://github.com/bealdav/pg-autojoin.git", rev = "main"
 homepage = "https://github.com/akretion/shiny-kpi/README.md"
 repository = "https://github.com/akretion/shiny-kpi"
 documentation = "https://github.com/akretion/shiny-kpi/README.md"
-
