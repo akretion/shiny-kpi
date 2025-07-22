@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 from ..db_connect import DbConnect
 
 
-class App(ABC):
+class SourceApp(ABC):
     name: str = None
     data: dict = None
     conn: DbConnect = None
