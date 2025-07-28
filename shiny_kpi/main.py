@@ -3,8 +3,9 @@ TODO
 - sources:
 """
 
+from shiny_kpi.src_app.odoo import Odoo
+
 from . import config
-from .app.odoo import Odoo
 
 
 def main():

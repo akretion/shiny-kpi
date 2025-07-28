@@ -3,9 +3,9 @@ from pathlib import Path
 
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 
-from .element import elements as elm
-from .main import instance
-from .tool import _
+from shiny_kpi.element import elements as elm
+from shiny_kpi.main import instance
+from shiny_kpi.tool import _
 
 app_dir = Path(__file__).parent
 app_css = app_dir / "style/app.css"
