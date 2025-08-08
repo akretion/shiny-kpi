@@ -6,3 +6,26 @@ purchase_order="date_order"
 
 [misc]
 ignored_logins=["default", "public", "portaltemplate", "portal", "__system__"]
+
+[table_aliases]
+account_fiscal_position="fpo"
+account_incoterms="inc"
+account_journal="jou"
+account_payment_term="pay_t"
+crm_team = "crt"
+mail_template="ml_tmpl"
+procurement_group="pg"
+product_pricelist="plist"
+purchase_order="po"
+purchase_order_line="pol"
+res_company="c"
+res_currency="curr"
+res_partner="p"
+res_users="u"
+sale_order="so"
+sale_order_line="sol"
+sale_order_template="solt"
+stock_warehouse="wh"
+utm_campaign="utmc"
+utm_medium="utmm"
+utm_source="utms"

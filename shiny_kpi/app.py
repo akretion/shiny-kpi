@@ -15,7 +15,7 @@ app_css = app_dir / "style/app.css"
 app_ui = ui.page_fillable(
     # To improve readability, method names are prefixed by _
     ui.card(
-        ui.card_header("Kpi"),
+        ui.card_header("Shiny Kpi"),
         ui.layout_sidebar(
             ui.sidebar(
                 "",
@@ -35,7 +35,6 @@ app_ui = ui.page_fillable(
 def app_server(input: Inputs, output: Outputs, session: Session):
     @render.ui
     def _navset_tab():
-        # panels = [ui.nav_panel(x, x) for x in instance.domain]
         # https://shiny.posit.co/py/layouts/navbars/#navbar-at-top
         return ui.navset_tab(*get_nav_panels(ui), id="tab")
 

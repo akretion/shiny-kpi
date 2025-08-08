@@ -2,7 +2,7 @@
 
 The shiny-kpi library is a Python project by Akretion tool for creating Key Performance Indicators (KPIs) from an existing database. 
 
-WORK IN PROGRESS - early stage
+# *WORK IN PROGRESS - early stage*
 
 
 ## Built on top of
