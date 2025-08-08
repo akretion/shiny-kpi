@@ -8,3 +8,5 @@ wheels/
 
 # Virtual environments
 .venv
+
+/kpi-custom/kpi_custom/data/dsn.toml

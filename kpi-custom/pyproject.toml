@@ -1,0 +1,24 @@
+[project]
+name = "kpi-custom"
+version = "0.1.0"
+description = "This is a project template to customize your dashboard"
+readme = "README.md"
+license = { text = "AGPL-3.0-or-later" }
+keywords = [ "Dashboard", "Kpi", "Shiny python", "Database", "Custom data" ]
+authors = [
+    { name = "David BEAL", email = "david.beal@akretion.com" },
+]
+maintainers = [
+]
+requires-python = ">=3.13"
+dependencies = [
+    "shiny-kpi"
+]
+
+[tool.uv.sources]
+pg-autojoin = { git = "https://github.com/akretion/shiny-kpi", rev = "main" }
+
+[project.urls]
+homepage = "https://github.com/akretion/shiny-kpi/README.md"
+repository = "https://github.com/akretion/shiny-kpi"
+documentation = "https://github.com/akretion/shiny-kpi/README.md"

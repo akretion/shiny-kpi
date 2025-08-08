@@ -1,0 +1,21 @@
+[data_source]
+name = "odoo"
+[df]
+# df aka Dataframes are used to access data like in sql views
+sales = {model="sale.order"}
+sale_products = {model="sale.order.line"}
+purchase_products = {model="purchase.order.line"}
+leads = {model="crm.lead"}
+[domain]
+# Domains are displayed as tabs in the dashboard
+Ventes = ["sales", "sale_products"]
+Achats = ["purchase_products"]
+Crm = ["leads"]
+[layout]  # Layout section are used to display data in the dashboard
+[layout.Ventes] # Layout section are related to domains previously defined
+"Cmdes de Ventes"={output="gt", df="sales"}
+# df is related to df section of this file
+# output define which object display data
+"Produits vendus"={output="df", df="sale_products"}
+[layout.Achats]
+Achats={output="df", df="purchase_products"}
