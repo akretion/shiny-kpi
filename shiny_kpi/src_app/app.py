@@ -17,7 +17,7 @@ class SourceApp(ABC):
     domain: list
 
     def __init__(self, data):
-        self.name = data["data_source"]["name"]
+        self.name = data["name"]
         self.dsn = data["dsn"]["main"]
         self.data = data
         self.domain = data["domain"].keys()

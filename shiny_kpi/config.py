@@ -18,23 +18,38 @@ def get_override_package():
 
 def get_custom_settings(override_package):
     def get_config_data(file, package=override_package):
-        file_path = files(package.replace("-", "_")) / f"data/{file}.toml"
+        try:
+            file_path = files(package.replace("-", "_")) / f"data/{file}.toml"
+        except ModuleNotFoundError as e:
+            e.add_note(
+                f"  >> Please check than package '{package}' is installed"
+                + " to continue sucessfully."
+            )
+            raise e
+        except Exception as e:
+            raise e
         data = False
         try:
             with file_path.open("rb") as f:
                 data = tomllib.load(f)
-        except FileNotFoundError:
-            logger.critical(f"Unfound '{file_path}.toml' file.")
+        except FileNotFoundError as e:
+            e.add_note(
+                f"  >> Please check than file '{file_path}' exists or create it"
+                + " to continue sucessfully."
+            )
+            raise e
+        except Exception as e:
+            raise e
         return data
 
     main_settings = get_config_data("config")
     dsn = get_config_data("dsn")
     main_settings.update(dsn)
     check_custom_settings(main_settings)
-    name = main_settings["data_source"]["name"]
+    name = main_settings["name"]
     if name == "odoo":
-        odoo_like = get_config_data("odoo", "shiny-kpi")
-        main_settings.update({"odoo": odoo_like})
+        odoo_toml = get_config_data("odoo", "shiny-kpi")
+        main_settings.update({"odoo": odoo_toml})
     return main_settings
 
 

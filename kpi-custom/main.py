@@ -1,5 +1,5 @@
 def main():
-    print("Hello from shiny-kpi!")
+    print("Hello from kpi-custom!")
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
+name = "odoo"  # configuration name
 [data_source]
-name = "odoo"
 [df]
 # df aka Dataframes are used to access data like in sql views
 sales = {model="sale.order"}

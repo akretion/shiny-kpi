@@ -10,7 +10,7 @@ from . import config
 
 def main():
     data = config.load()
-    inst = get_object(data["data_source"]["name"])(data)
+    inst = get_object(data["name"])(data)
     inst.connect()
     inst.get_logins()
     # inst.get_tables()

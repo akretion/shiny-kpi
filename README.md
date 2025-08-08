@@ -37,7 +37,7 @@ pip install -e .
 
 ## Configuration
 
-In https://github.com/akretion/shiny-kpi/kpi-custom/kpi_custom/data
+In https://github.com/akretion/shiny-kpi/tree/main/kpi-custom/kpi_custom/data
 
 - Update `config.toml` to fill your expectations.
 
