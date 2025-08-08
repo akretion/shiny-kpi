@@ -3,6 +3,7 @@ from pathlib import Path
 
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 
+from shiny_kpi.builder import get_nav_panels
 from shiny_kpi.element import elements as elm
 from shiny_kpi.main import instance
 from shiny_kpi.tool import _
@@ -12,6 +13,7 @@ app_css = app_dir / "style/app.css"
 
 
 app_ui = ui.page_fillable(
+    # To improve readability, method names are prefixed by _
     ui.card(
         ui.card_header("Kpi"),
         ui.layout_sidebar(
@@ -20,7 +22,7 @@ app_ui = ui.page_fillable(
                 # ui.output_ui("_data_source"),
                 ui.output_ui("_organizations"),
                 ui.output_ui("_date_range"),
-                # ui.output_ui("debug"),
+                # ui.output_ui("_debug"),
                 bg="#f8f8f8",
             ),
             ui.output_ui("_navset_tab"),
@@ -33,9 +35,9 @@ app_ui = ui.page_fillable(
 def app_server(input: Inputs, output: Outputs, session: Session):
     @render.ui
     def _navset_tab():
-        panels = [ui.nav_panel(x, x) for x in instance.domain]
+        # panels = [ui.nav_panel(x, x) for x in instance.domain]
         # https://shiny.posit.co/py/layouts/navbars/#navbar-at-top
-        return ui.navset_tab(*panels, id="tab")
+        return ui.navset_tab(*get_nav_panels(ui), id="tab")
 
     @render.ui
     def _data_source():
@@ -89,7 +91,7 @@ def app_server(input: Inputs, output: Outputs, session: Session):
         elm.organizations.set(input.organization())
 
     @render.ui
-    def debug():
+    def _debug():
         dbg = [
             instance.get_organizations().__str__(),
             instance.__str__(),

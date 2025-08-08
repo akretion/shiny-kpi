@@ -1,15 +1,15 @@
 """
 TODO
-- sources:
+- sources: implement dataframe
 """
 
-from shiny_kpi.src_app.odoo import Odoo
-
 from . import config
+from .src_app.odoo import Odoo
 
 
 def main():
     data = config.load()
+    # We need to chose the right class according to our application type.
     inst = get_object(data["name"])(data)
     inst.connect()
     inst.get_logins()
