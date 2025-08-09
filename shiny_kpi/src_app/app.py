@@ -15,16 +15,30 @@ class SourceApp(ABC):
     logins: dict = None
     dsn: str = None
     # List of models or table to be used
-    domain: list
+    domains: list
     # Sql aliases
     table_aliases: dict = None
+    # Dataframes keys
+    df_keys: list = None
+    # DataFrames
+    df: dict = {}
 
     def __init__(self, data):
         self.name = data["name"]
         self.dsn = data["dsn"]["main"]
         self.data = data
         self.table_aliases = data.get("odoo").get("table_aliases")
-        self.domain = data["domain"].keys()
+        self.domains = data["domain"].keys()
+        self.set_df_keys()
+
+    def set_df_keys(self):
+        df_by_domain_keys = []
+        for domain in self.data['domain'].values():
+            df_by_domain_keys.append(domain)
+        dfs = []
+        for elm in df_by_domain_keys:
+            dfs.extend(elm)
+        self.df_keys = dfs
 
     def connect(self):
         if not self.conn:

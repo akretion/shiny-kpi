@@ -55,12 +55,9 @@ def get_custom_settings(override_package):
 
 def check_custom_settings(data):
     messages = []
-    source = data.get("data_source")
-    if not source:
-        messages = ["Missing 'data_source' in config.toml file."]
-    name = source.get("name")
+    name = data.get("name")
     if not name:
-        messages.append("Missing 'name' in 'data_source' section in config.toml file")
+        messages.append("Missing 'name' in 'name' section in config.toml file")
         if name == "odoo":
             """"""
             # TODO manage case where this is not Odoo
