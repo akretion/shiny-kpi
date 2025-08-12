@@ -1,5 +1,5 @@
 import gettext
-import polars as pl 
+import polars as pl
 
 _ = gettext.gettext
 

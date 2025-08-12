@@ -12,6 +12,7 @@ class SourceApp(ABC):
     name: str = None
     data: dict = None
     conn: DbConnect = None
+    lang: str = "en_US"
     logins: dict = None
     dsn: str = None
     # List of models or table to be used
@@ -30,6 +31,8 @@ class SourceApp(ABC):
         self.table_aliases = data.get("odoo").get("table_aliases")
         self.domains = data["domain"].keys()
         self.set_df_keys()
+        if "lang" in data:
+            self.lang = data["lang"]
 
     def set_df_keys(self):
         df_by_domain_keys = []

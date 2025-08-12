@@ -1,5 +1,6 @@
 import polars as pl
 from pg_autojoin import SqlJoin
+from pg_sql_helper import PgSqlHelper
 
 from .app import SourceApp
 
@@ -23,14 +24,18 @@ class Odoo(SourceApp):
 
     def get_sql_from_table(self, table):
         dsn = self.split_dsn()
-        autojoin = SqlJoin(
-            db=dsn["db"], user=dsn["user"], password=dsn["password"], host=dsn["host"]
-        )
+        dsn.pop("scheme")
+        autojoin = SqlJoin(**dsn)
         if self.table_aliases:
             # If table aliases are defined, we use them
             autojoin.set_aliases(self.table_aliases)
         autojoin.set_columns_to_retrieve(["name", "ref", "code"])
         sql, asterisk_cols = autojoin.get_joined_query(table=table)
+        helper = PgSqlHelper(**dsn, lang=self.lang)
+        if asterisk_cols:
+            pfix = asterisk_cols[:-2]
+            cols = ", ".join([f"{pfix}.{x}" for x in helper.process(table)])
+            sql = sql.replace(asterisk_cols, cols)
         return sql
 
     def get_tables(self):
@@ -45,6 +50,4 @@ class Odoo(SourceApp):
         df = df.with_columns(
             table=pl.col("model").str.replace(".", "_", literal=True, n=10)
         )
-        print(df)
         return df.select("table").to_series().to_list()
-
