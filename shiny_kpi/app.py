@@ -3,7 +3,7 @@ from pathlib import Path
 
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 
-from shiny_kpi.builder import get_nav_panels
+from shiny_kpi.builder import get_dataframes, get_nav_panels
 from shiny_kpi.element import elements as elm
 from shiny_kpi.main import instance
 from shiny_kpi.tool import _
@@ -25,18 +25,36 @@ app_ui = ui.page_fillable(
                 # ui.output_ui("_debug"),
                 bg="#f8f8f8",
             ),
+            ui.head_content(
+                ui.tags.meta(
+                    name="viewport", content="width=device-width, initial-scale=1"
+                )
+            ),
             ui.output_ui("_navset_tab"),
         ),
     ),
     ui.include_css(app_css),
 )
+get_dataframes()
+summary_df = instance.df["purchase_products"]
 
 
 def app_server(input: Inputs, output: Outputs, session: Session):
+    @render.data_frame
+    def my_df():
+        return render.DataGrid(summary_df, selection_mode="rows", filters=True)
+
     @render.ui
     def _navset_tab():
         # https://shiny.posit.co/py/layouts/navbars/#navbar-at-top
-        return ui.navset_tab(*get_nav_panels(ui), id="tab")
+        return ui.navset_tab(
+            ui.nav_panel(
+                _("Try"), ui.card(ui.output_data_frame("my_df"), height="800px")
+            ),
+            ui.nav_panel(_("Welcome"), ui.card(ui.markdown(instance.welcome()))),
+            *get_nav_panels(ui),
+            id="tab",
+        )
 
     @render.ui
     def _data_source():

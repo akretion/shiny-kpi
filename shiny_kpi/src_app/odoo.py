@@ -30,7 +30,8 @@ class Odoo(SourceApp):
             # If table aliases are defined, we use them
             autojoin.set_aliases(self.table_aliases)
         autojoin.set_columns_to_retrieve(["name", "ref", "code"])
-        return autojoin.get_joined_query(table=table)
+        sql, asterisk_cols = autojoin.get_joined_query(table=table)
+        return sql
 
     def get_tables(self):
         """Return list of tables according to:
@@ -46,3 +47,4 @@ class Odoo(SourceApp):
         )
         print(df)
         return df.select("table").to_series().to_list()
+

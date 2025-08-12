@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 
+import polars as pl
 from shiny import reactive
 
 EPOCH = datetime(1970, 1, 1, 0, 0, 0)
@@ -8,6 +9,8 @@ EPOCH = datetime(1970, 1, 1, 0, 0, 0)
 
 @dataclass
 class Elements:
+    # df: reactive.value[dict:[str: pl]] = reactive.value([""])
+    df0: reactive.value[pl.dataframe] = reactive.value(False)
     organizations: reactive.value[list[str]] = reactive.value([""])
     # organizations such as companies or any associations
     min_date: reactive.value[datetime] = reactive.value(EPOCH)

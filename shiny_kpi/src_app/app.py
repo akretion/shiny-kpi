@@ -33,7 +33,7 @@ class SourceApp(ABC):
 
     def set_df_keys(self):
         df_by_domain_keys = []
-        for domain in self.data['domain'].values():
+        for domain in self.data["domain"].values():
             df_by_domain_keys.append(domain)
         dfs = []
         for elm in df_by_domain_keys:
@@ -57,6 +57,17 @@ class SourceApp(ABC):
 
     def get_table(self, model):
         return model
+
+    def welcome(self):
+        return """
+        # Hello World
+
+        Here is your **Shiny Kpi** application.
+
+        Tabs on the right give acces to many data information.
+
+        Sidebar on the left allows you to globally filter your kpis.
+        """
 
     @abstractmethod
     def get_tables(self):

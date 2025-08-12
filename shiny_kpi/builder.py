@@ -1,13 +1,27 @@
+from shiny import render
+
 from .main import instance
+from .tool import drop_null_columns_in_df
 
 
 def get_nav_panels(ui):
     panels = []
     get_dataframes()
     for domain in instance.domains:
-        df = [instance.df.get(x) for x in instance.data['domain'][domain]]
-        panels.append(ui.nav_panel(domain, df))
+        dfs = [
+            instance.df.get(x)
+            # x: instance.df.get(x)
+            for x in instance.data["domain"][domain]
+            if x in instance.df
+        ]
+        if dfs:
+            panels.append(ui.nav_panel(domain, dfs))
     return panels
+
+
+@render.data_frame
+def get_dataframe(dfs):
+    return dfs
 
 
 def get_dataframes():
@@ -16,8 +30,8 @@ def get_dataframes():
     """
     data = instance.data
     for elm in instance.df_keys:
-        sql = instance.get_sql_from_table(
-            instance.get_table(data["df"][elm]["model"])
-        )
+        sql = instance.get_sql_from_table(instance.get_table(data["df"][elm]["model"]))
         if sql:
-            instance.df[elm] = instance.conn.read(sql)
+            df = instance.conn.read(sql)
+            df = drop_null_columns_in_df(df)
+            instance.df[elm] = df

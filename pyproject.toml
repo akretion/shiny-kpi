@@ -24,10 +24,12 @@ dependencies = [
     "pyarrow",
     "connectorx",
     "pg-autojoin",
+    "pg-sql-helper",
 ]
 
 [tool.uv.sources]
 pg-autojoin = { git = "https://github.com/bealdav/pg-autojoin.git", rev = "main" }
+pg-sql-helper = { git = "https://github.com/bealdav/pg-sql-helper.git", rev = "main" }
 
 [project.urls]
 homepage = "https://github.com/akretion/shiny-kpi/README.md"
