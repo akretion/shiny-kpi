@@ -15,6 +15,7 @@ class SourceApp(ABC):
     lang: str = "en_US"
     logins: dict = None
     dsn: str = None
+    paging: str = None
     # List of models or table to be used
     domains: list
     # Sql aliases
@@ -27,6 +28,7 @@ class SourceApp(ABC):
     def __init__(self, data):
         self.name = data["name"]
         self.dsn = data["dsn"]
+        self.paging = data["paging"]
         self.data = data
         self.table_aliases = data.get("odoo").get("table_aliases")
         self.domains = data["domain"].keys()
@@ -71,10 +73,6 @@ class SourceApp(ABC):
 
         Sidebar on the left allows you to globally filter your kpis.
         """
-
-    @abstractmethod
-    def get_tables(self):
-        pass
 
     def split_dsn(self):
         """Split the DSN into its components."""

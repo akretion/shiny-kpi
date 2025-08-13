@@ -1,4 +1,3 @@
-import polars as pl
 from pg_autojoin import SqlJoin
 from pg_sql_helper import PgSqlHelper
 from sqlglot import parse_one, transpile
@@ -32,6 +31,7 @@ class Odoo(SourceApp):
             # If table aliases are defined, we use them
             autojoin.set_aliases(self.table_aliases)
         autojoin.set_columns_to_retrieve(["name", "ref", "code"])
+        cols = autojoin.get_columns_in_table(table)
         sql, asterisk_cols = autojoin.get_joined_query(table=table)
         helper = PgSqlHelper(**dsn, lang=self.lang)
         helper.set_columns_to_drop(["create_uid", "create_date"])
@@ -47,16 +47,6 @@ class Odoo(SourceApp):
             sql = transpile(sql, read="postgres")[0]
         return sql
 
-    def get_tables(self):
-        """Return list of tables according to:
-        - config data source set manually
-        - user grants
-        """
-        sql = f"""
-        SELECT model, name FROM ir_model WHERE model IN {tuple(self.instance.models)}"""
-        df = self.instance.conn.read(sql)
-        # TODO manage exceptions
-        df = df.with_columns(
-            table=pl.col("model").str.replace(".", "_", literal=True, n=10)
-        )
-        return df.select("table").to_series().to_list()
+    def _add_common_conditions(self, cols):
+        if "company_id" in cols:
+            ""

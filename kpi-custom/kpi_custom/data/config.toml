@@ -1,5 +1,6 @@
 name = "odoo"  # configuration name
 lang = "fr_FR"
+paging = "Lignes de {start} à {end} sur {total}"
 # TODO make config hierarchical
 # [div]  # like divide
 # [div.sales]  # domain
@@ -15,13 +16,13 @@ lang = "fr_FR"
 # where="purchase.state in ('purchase', 'done')"
 
 [src]  # data source
-[src.sales]
-model="sale.order"
-where="state in ('sale', 'done')"
+# [src.sales]
+# model="sale.order"
+# where="state in ('sale', 'done')"
 
-[src.sale_products]
-model="sale.order.line"
-where="sale.state in ('sale', 'done')"
+# [src.sale_products]
+# model="sale.order.line"
+# where="sale.state in ('sale', 'done')"
 
 [src.purchased_products]
 model="purchase.order.line"
@@ -32,7 +33,7 @@ model="crm.lead"
 
 [domain]
 # Domains are displayed as tabs in the dashboard
-Ventes = ["sales", "sale_products"]
+# Ventes = ["sales", "sale_products"]
 Achats = ["purchased_products"]
 # Crm = ["leads"]
 
