@@ -23,7 +23,8 @@ class Odoo(SourceApp):
     def get_table(self, model):
         return model.replace(".", "_")
 
-    def get_sql_from_model(self, table):
+    def get_sql_from_src(self, src):
+        table = self.get_table(src.get("model"))
         dsn = self.split_dsn()
         dsn.pop("scheme")
         autojoin = SqlJoin(**dsn)
@@ -40,7 +41,9 @@ class Odoo(SourceApp):
             cols = ", ".join([f"{pfix}.{x}" for x in helper.process(table)])
             sql = sql.replace(asterisk_cols, cols)
         if sql:
-            sql = parse_one(sql).where("purchase.state in ('purchase', 'done')").sql()
+            where = src.get("where")
+            if where:
+                sql = parse_one(sql).where(where).sql()
             sql = transpile(sql, read="postgres")[0]
         return sql
 

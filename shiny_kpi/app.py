@@ -36,7 +36,7 @@ app_ui = ui.page_fillable(
     ui.include_css(app_css),
 )
 get_dataframes()
-summary_df = instance.df["purchase_products"]
+summary_df = instance.df["purchased_products"]
 
 
 def app_server(input: Inputs, output: Outputs, session: Session):

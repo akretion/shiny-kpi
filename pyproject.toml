@@ -1,6 +1,6 @@
 [project]
 name = "shiny-kpi"
-version = "0.1.0"
+version = "0.1.1"
 description = "From database to KPI"
 readme = "README.md"
 license = { text = "AGPL-3.0-or-later" }
@@ -29,8 +29,10 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-pg-autojoin = { git = "https://github.com/bealdav/pg-autojoin.git", rev = "main" }
-pg-sql-helper = { git = "https://github.com/bealdav/pg-sql-helper.git", rev = "main" }
+pg-autojoin = { path = "../pg-autojoin", editable = true }
+pg-sql-helper = { path = "../pg-sql-helper", editable = true }
+
+# pg-autojoin = { git = "https://github.com/bealdav/pg-autojoin.git", rev = "main" }
 
 [project.urls]
 homepage = "https://github.com/akretion/shiny-kpi/README.md"

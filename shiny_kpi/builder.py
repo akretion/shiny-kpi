@@ -29,8 +29,8 @@ def get_dataframes():
     Get the dataframe for each domain.
     """
     data = instance.data
-    for elm in instance.df_keys:
-        sql = instance.get_sql_from_model(instance.get_table(data["df"][elm]["model"]))
+    for elm in instance.src_keys:
+        sql = instance.get_sql_from_src(data["src"][elm])
         if sql:
             df = instance.conn.read(sql)
             df = drop_null_columns_in_df(df)

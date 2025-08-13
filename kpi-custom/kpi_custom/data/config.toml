@@ -1,26 +1,46 @@
 name = "odoo"  # configuration name
-[data_source]
-[df]
-# df aka Dataframes are used to access data like in sql views
-[df.sales]
+lang = "fr_FR"
+# TODO make config hierarchical
+# [div]  # like divide
+# [div.sales]  # domain
+# name = "Ventes"
+# [div.sales.sale_order]  # kpi
+# [div.sales.src.so]
+# model="sale.order"
+# where="state in ('sale', 'done')"
+# [div.purchases]  # domain
+#     [purchased_products]
+#         [src]
+# model="purchase.order.line"
+# where="purchase.state in ('purchase', 'done')"
+
+[src]  # data source
+[src.sales]
 model="sale.order"
-[df.sale_products]
+where="state in ('sale', 'done')"
+
+[src.sale_products]
 model="sale.order.line"
-[df.purchased_products]
+where="sale.state in ('sale', 'done')"
+
+[src.purchased_products]
 model="purchase.order.line"
 where="purchase.state in ('purchase', 'done')"
-[df.leads]
+
+[src.leads]
 model="crm.lead"
+
 [domain]
 # Domains are displayed as tabs in the dashboard
 Ventes = ["sales", "sale_products"]
 Achats = ["purchased_products"]
-Crm = ["leads"]
+# Crm = ["leads"]
+
 [layout]  # Layout section are used to display data in the dashboard
 [layout.Ventes] # Layout section are related to domains previously defined
-"Cmdes de Ventes"={output="gt", df="sales"}
+# "Cmdes de Ventes"={output="gt", df="sales"}
 # df is related to df section of this file
 # output define which object display data
-"Produits vendus"={output="df", df="sale_products"}
+# "Produits vendus"={output="df", df="sale_products"}
 [layout.Achats]
 Achats={output="df", df="purchased_products"}

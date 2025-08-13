@@ -19,14 +19,14 @@ class SourceApp(ABC):
     domains: list
     # Sql aliases
     table_aliases: dict = None
-    # Dataframes keys
-    df_keys: list = None
+    # Datasource keys
+    src_keys: list = None
     # DataFrames
     df: dict = {}
 
     def __init__(self, data):
         self.name = data["name"]
-        self.dsn = data["dsn"]["main"]
+        self.dsn = data["dsn"]
         self.data = data
         self.table_aliases = data.get("odoo").get("table_aliases")
         self.domains = data["domain"].keys()
@@ -41,7 +41,7 @@ class SourceApp(ABC):
         dfs = []
         for elm in df_by_domain_keys:
             dfs.extend(elm)
-        self.df_keys = dfs
+        self.src_keys = dfs
 
     def connect(self):
         if not self.conn:
@@ -55,7 +55,7 @@ class SourceApp(ABC):
         pass
 
     @abstractmethod
-    def get_sql_from_model(self, table):
+    def get_sql_from_src(self, src):
         pass
 
     def get_table(self, model):

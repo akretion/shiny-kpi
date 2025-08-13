@@ -62,7 +62,7 @@ def check_custom_settings(data):
             """"""
             # TODO manage case where this is not Odoo
     dsn = data.get("dsn")
-    if not dsn or not dsn.get("main"):
+    if not dsn:
         messages.append("Missing 'dsn.main' section in dsn.toml file")
     if messages:
         logger.error(f"Custom settings check failed: {', '.join(messages)}")
