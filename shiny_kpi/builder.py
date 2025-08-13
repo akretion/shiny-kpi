@@ -30,7 +30,7 @@ def get_dataframes():
     """
     data = instance.data
     for elm in instance.df_keys:
-        sql = instance.get_sql_from_table(instance.get_table(data["df"][elm]["model"]))
+        sql = instance.get_sql_from_model(instance.get_table(data["df"][elm]["model"]))
         if sql:
             df = instance.conn.read(sql)
             df = drop_null_columns_in_df(df)

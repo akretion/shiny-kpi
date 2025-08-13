@@ -25,6 +25,7 @@ dependencies = [
     "connectorx",
     "pg-autojoin",
     "pg-sql-helper",
+    "sqlglot[rs]>=27.6.0",
 ]
 
 [tool.uv.sources]

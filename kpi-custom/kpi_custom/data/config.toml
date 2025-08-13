@@ -2,14 +2,19 @@ name = "odoo"  # configuration name
 [data_source]
 [df]
 # df aka Dataframes are used to access data like in sql views
-sales = {model="sale.order"}
-sale_products = {model="sale.order.line"}
-purchase_products = {model="purchase.order.line"}
-leads = {model="crm.lead"}
+[df.sales]
+model="sale.order"
+[df.sale_products]
+model="sale.order.line"
+[df.purchased_products]
+model="purchase.order.line"
+where="purchase.state in ('purchase', 'done')"
+[df.leads]
+model="crm.lead"
 [domain]
 # Domains are displayed as tabs in the dashboard
 Ventes = ["sales", "sale_products"]
-Achats = ["purchase_products"]
+Achats = ["purchased_products"]
 Crm = ["leads"]
 [layout]  # Layout section are used to display data in the dashboard
 [layout.Ventes] # Layout section are related to domains previously defined
@@ -18,4 +23,4 @@ Crm = ["leads"]
 # output define which object display data
 "Produits vendus"={output="df", df="sale_products"}
 [layout.Achats]
-Achats={output="df", df="purchase_products"}
+Achats={output="df", df="purchased_products"}

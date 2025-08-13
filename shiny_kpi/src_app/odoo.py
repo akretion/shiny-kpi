@@ -1,6 +1,7 @@
 import polars as pl
 from pg_autojoin import SqlJoin
 from pg_sql_helper import PgSqlHelper
+from sqlglot import parse_one, transpile
 
 from .app import SourceApp
 
@@ -22,7 +23,7 @@ class Odoo(SourceApp):
     def get_table(self, model):
         return model.replace(".", "_")
 
-    def get_sql_from_table(self, table):
+    def get_sql_from_model(self, table):
         dsn = self.split_dsn()
         dsn.pop("scheme")
         autojoin = SqlJoin(**dsn)
@@ -32,10 +33,15 @@ class Odoo(SourceApp):
         autojoin.set_columns_to_retrieve(["name", "ref", "code"])
         sql, asterisk_cols = autojoin.get_joined_query(table=table)
         helper = PgSqlHelper(**dsn, lang=self.lang)
+        helper.set_columns_to_drop(["create_uid", "create_date"])
+        helper.set_columns_to_drop_according_to_regex([r"_id$"])
         if asterisk_cols:
             pfix = asterisk_cols[:-2]
             cols = ", ".join([f"{pfix}.{x}" for x in helper.process(table)])
             sql = sql.replace(asterisk_cols, cols)
+        if sql:
+            sql = parse_one(sql).where("purchase.state in ('purchase', 'done')").sql()
+            sql = transpile(sql, read="postgres")[0]
         return sql
 
     def get_tables(self):

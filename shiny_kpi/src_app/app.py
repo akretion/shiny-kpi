@@ -55,7 +55,7 @@ class SourceApp(ABC):
         pass
 
     @abstractmethod
-    def get_sql_from_table(self, table):
+    def get_sql_from_model(self, table):
         pass
 
     def get_table(self, model):
